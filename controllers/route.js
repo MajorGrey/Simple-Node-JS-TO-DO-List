@@ -2,8 +2,8 @@ var moment = require('moment');
 var mongoose = require('mongoose');
 var formParser = require('body-parser');
 var formParse = formParser.urlencoded({ extended: false });
-
-mongoose.connect('mongodb+srv://major_grey:uniquejimmy@cluster0.jhis7.mongodb.net/test?retryWrites=true&w=majority', {
+//connect your mongo db here
+mongoose.connect('mongodb+srv://<user>:<password>@cluster0.jhis7.mongodb.net/test?retryWrites=true&w=majority', {
     useNewUrlParser: true
 });
 
