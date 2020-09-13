@@ -1,10 +1,42 @@
+var moment = require('moment');
+var mongoose = require('mongoose');
+var formParser = require('body-parser');
+var formParse = formParser.urlencoded({ extended: false });
+
+mongoose.connect('mongodb+srv://major_grey:uniquejimmy@cluster0.jhis7.mongodb.net/test?retryWrites=true&w=majority', {
+    useNewUrlParser: true
+});
+
+var schema = new mongoose.Schema({
+    title: String,
+    item: String,
+    date: String
+
+});
+var Todo = mongoose.model('Todo', schema);
+
 module.exports = (route) => {
     route.get('/', (req, res) => {
-        var data = [{ title: 'Watch Movie', item: 'watch some movies on pc for at lest 10 hrs' }, { title: 'Watch Song', item: 'watch some movies on pc for at lest 10 hrs' }, { title: 'Watch Anime', item: 'watch some movies on pc for at lest 10 hrs' }];
-        res.render('index', { data: data });
+        Todo.find({}, (err, data) => {
+            if (err) throw err;
+            res.render('index', { data: data, moment: moment });
+        })
     });
-    route.post('/', (req, res) => {
-        var data = [{ title: 'Watch Movie', item: 'watch some movies on pc for at lest 10 hrs' }, { title: 'Watch Song', item: 'watch some movies on pc for at lest 10 hrs' }, { title: 'Watch Anime', item: 'watch some movies on pc for at lest 10 hrs' }];
-        res.render('index', { data: data });
+    route.post('/', formParse, (req, res) => {
+        console.log(req.body);
+
+        var newTodo = Todo(req.body).save((err, data) => {
+            if (err) throw err;
+            res.json(data);
+        });
+        // res.render('index', { data: data, moment: moment });
+    });
+    route.delete('/del/:item', (req, res) => {
+        Todo.find({
+            item: req.params.item.replace(/\-/g, " ")
+        }).remove((err, data) => {
+            if (err) throw err;
+            res.json(data)
+        });
     });
 }

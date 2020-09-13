@@ -19,7 +19,7 @@
                     </form>
                 </div>
 
-                <div class="row">
+                <div class="row" id="datas">
                     <? data.forEach( (item)=>{?>
                         <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-4">
                             <div class="card" style="width: 18rem;">
@@ -28,13 +28,13 @@
                                         <?= item.title?>
                                     </h5>
                                     <p class="card-subtitle mb-2 text-muted small">
-                                        <?= new Date()?>
+                                        <?= moment(item.date).fromNow()?>
                                     </p>
                                     <p class="card-text text-muted">
                                         <?=item.item ?>
                                     </p>
                                     <a href="#" class="card-link btn btn-light">Update</a>
-                                    <a href="#" class="float-right btn btn-light">Delete</a>
+                                    <a id="del" data-id="<?= item.id?>" href="#" class="float-right btn btn-light">Delete</a>
                                 </div>
                             </div>
                         </div>
