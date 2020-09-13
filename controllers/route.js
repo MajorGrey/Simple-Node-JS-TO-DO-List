@@ -33,7 +33,7 @@ module.exports = (route) => {
     });
     route.delete('/del/:item', (req, res) => {
         Todo.find({
-            item: req.params.item.replace(/\-/g, " ")
+            title: req.params.item
         }).remove((err, data) => {
             if (err) throw err;
             res.json(data)
